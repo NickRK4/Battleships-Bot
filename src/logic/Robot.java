@@ -6,11 +6,20 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Robot extends Player {
-
 	public static Random r = new Random();
+	// all the robot's potential pixels choices
 	private ArrayList<Integer> robotPixels = new ArrayList<Integer>();
+	// the buffer zone that protects ships from being within 1 pixel from another ship
+	private double[][] probabilityGrid;
+	
+	public Robot(Board board, Minimap minimap) {
+		super(board, minimap);
+		setRobotPixels();
+		probabilityGrid = new double[10][10];
+	}
 	
 	private void setRobotPixels() {
+		// adds all the "2nd" pixels to the robotPixels, so that the robot has max 50 guesses
 		for (int row = 0; row < 10; row++) {
 			if (row % 2 == 0) {
 				for (int col = 0; col < 10; col+=2) {
@@ -26,22 +35,20 @@ public class Robot extends Player {
 		}
 	}
 	
-	private double[][] probabilityGrid;
-	// constructs the board (a 2x2 grid of doubles where True is a ship pixel)
-
-	public Robot(Board board, Minimap minimap) {
-		super(board, minimap);
-		setRobotPixels();
-	}
-	
 	// function that creates a board where no ship touches the other
 	public void createBoard() {
+		// empties the board if there is one already
+		getBoard().resetBoard();
+		// stores all the pairs
 		Set<String> pair = new HashSet<String>();
-		RandomSelector selector = new RandomSelector();
+		// creates the buffer zone
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				probabilityGrid[i][j] = 1;
+			}
+		}
 		
-		probabilityGrid = selector.createGrid(10);
 		int[] lengths = {2,3,3,4,5};
-		
 		for (int i: lengths) {
 			boolean isPlaced = false;
 			while (!isPlaced) {
@@ -61,15 +68,12 @@ public class Robot extends Player {
 				if (canPlace) {
 					boolean landsWithinBuffer = landsWithinBuffer(row, col, orientation, i);
 					if (!landsWithinBuffer) {
-						
 						updateGrid(row, col, orientation, i); // updates the grid correctly
 						getBoard().addShip(row, col, orientation, i); // adds the boat
 						isPlaced = true;
 					}
-					else {
-						continue;
-					}
-					} else continue;
+					else continue;
+				} else continue;
 				
 			} // end of while loop
 		} // end of for loop
@@ -77,11 +81,9 @@ public class Robot extends Player {
 	
 	
 	// arguments are the ship's row, ship's column, length of the ship, orientation
-	// tries to update the grid. Returns true if it updates successfully, returns false if not.
 	private void updateGrid(int row, int col, char o, int length) {
-		//RandomSelector s = new RandomSelector();
-		//double[][] tempGrid = s.copyGrid(probabilityGrid); // deep copy of the current grid
         int startRow, endRow, startCol, endCol;
+        // buffer zone depends on length and orientation
         if (o == 'h') {
             // Horizontal ship
             startRow = Math.max(0, row - 1);
@@ -144,12 +146,6 @@ public class Robot extends Player {
 	
 	
 	// MAIN STRIKE FUNCTION
-	
-	// stores a list of all the diagonal pixels to the ship and ensures that they are dumped
-	// from the unknownPixels at the beginning of each iteration
-	
-	// need to store the position of the ships!!
-	
 	public void strike(Player other) {
 	    ArrayList<Integer> OneAndTwoAway = new ArrayList<>();
 	    ArrayList<Integer> onlyOneAway = new ArrayList<>();
@@ -197,16 +193,6 @@ public class Robot extends Player {
 	    System.out.println("Computer plays: " + humanCoords[1] + "" + humanCoords[0]);
 	    super.strike(other, decodedMove[0], decodedMove[1]);
 	}	
-	/*
-	private boolean isDiagonalToTruePixel(int guess) {
-		for (int hit : hitPixels) {
-			if (Math.abs(guess - hit) == 11 || Math.abs(guess - hit) == 9) {
-				return true;
-			}
-		}
-		return false;
-	}
-	*/
 	
 	// returns a valid integer from the list
 	private int chooseRandom(ArrayList<Integer> list) {
@@ -222,7 +208,6 @@ public class Robot extends Player {
 		}
 		return list.get(guess);
 	}
-
 	
 	// helper method just to print out the coordinates
 	public String[] getCoordinates(int[] rc) {

@@ -1,4 +1,4 @@
-package logic;
+	package logic;
 
 import java.util.ArrayList;
 
@@ -12,6 +12,14 @@ public class Board extends Grid {
 			board[i] = new Boolean[10];
 			for (int j = 0; j < 10; j++) {
 				board[i][j] = false;
+			}
+		}
+	}
+	
+	public void resetBoard() {
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				setCoordinate(i, j, false);
 			}
 		}
 	}
