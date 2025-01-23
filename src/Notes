@@ -1,0 +1,20 @@
+Notes to "flatten" the 2D-grid and remove 2D arrays
+
+Board: 
+Stores all the ships
+To print the board:
+Loop through all the ships on the board
+	> Check if there is a ship at that pixel
+		> Check if the point is sunk using the isSunk() method
+
+Instead of adding a ship twice, the code should dynamically create a ship object 
+and use a board.addShip(ship) method
+
+
+Work on using the PointDecoder more in the main method, rather than within the Ship.addShip()
+method. 
+
+
+Dependencies / Exceptions:
+Create board should use the row/col generator, but then flatten it to a single number
+Check valid should also use a row and column input.

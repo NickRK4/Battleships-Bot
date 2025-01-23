@@ -6,7 +6,8 @@ public class Ship {
 	
 	// a ship is just a wrapper class for a group of coordinates
 	private ArrayList<Integer> coordinates = new ArrayList<Integer>();
-	private ArrayList<Boolean> isFloating = new ArrayList<Boolean>();
+	// checks if each point is floating
+	private ArrayList<Boolean> floatingPoints = new ArrayList<Boolean>();
 	
 	public Ship(int row, int col, char o, int l) {
 		setShip(row, col, o, l);
@@ -17,11 +18,11 @@ public class Ship {
 	}
 	
 	public ArrayList<Boolean> getShipFloats(){
-		return isFloating;
+		return floatingPoints;
 	}
 	
 	public void setIsFloating(int position, boolean b) {
-		isFloating.set(coordinates.indexOf(Integer.valueOf(position)), b);
+		floatingPoints.set(coordinates.indexOf(Integer.valueOf(position)), b);
 	}
 	
 	
@@ -30,17 +31,17 @@ public class Ship {
 		// Sets the starting point for the boat)
 		int flatCoords = PointDecoder.encode(row, col);
 		coordinates.add(flatCoords);
-		isFloating.add(true);
+		floatingPoints.add(true);
 		if (orientation == 'v') {
 			// for vertical 
 			for (int i = 1; i < length; i++) {
 				coordinates.add(flatCoords-10*i);
-				isFloating.add(true);
+				floatingPoints.add(true);
 			}
 		} else {
 			for (int i = 1 ; i < length ; i++) {
 				coordinates.add(flatCoords+i);
-				isFloating.add(true);
+				floatingPoints.add(true);
 			}
 		}
 	}
@@ -53,7 +54,7 @@ public class Ship {
 	}
 	
 	public boolean isSunk() {
-		for (Boolean b: this.isFloating) {
+		for (Boolean b: this.floatingPoints) {
 			if (b) {
 				return false;
 			}
