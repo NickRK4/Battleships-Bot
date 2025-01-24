@@ -49,7 +49,7 @@ public class Robot extends Player {
 		}
 		
 		int[] lengths = {2,3,3,4,5};
-		for (int i: lengths) {
+		for (int len: lengths) {
 			boolean isPlaced = false;
 			while (!isPlaced) {
 				int row = r.nextInt(10);
@@ -64,12 +64,13 @@ public class Robot extends Player {
 					pair.add(key); // adds this to the list
 				}
 				// checks if the given coordinates will work
-				boolean canPlace = canPlace(row, col, orientation, i);
+				boolean canPlace = canPlace(row, col, orientation, len);
 				if (canPlace) {
-					boolean landsWithinBuffer = landsWithinBuffer(row, col, orientation, i);
+					boolean landsWithinBuffer = landsWithinBuffer(row, col, orientation, len);
 					if (!landsWithinBuffer) {
-						updateGrid(row, col, orientation, i); // updates the grid correctly
-						getBoard().addShip(row, col, orientation, i); // adds the boat
+						int p = PointDecoder.encode(row, col);
+						updateGrid(row, col, orientation, len); // updates the grid correctly
+						getBoard().addShip(new Ship(p, orientation, len)); // adds the boat
 						isPlaced = true;
 					}
 					else continue;

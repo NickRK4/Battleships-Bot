@@ -67,7 +67,7 @@ public class PlayGame {
 	                 if (canPlace) {
 	                	 System.out.println("Success");
 	                	 isPlaced = true;
-	                	 user.getBoard().addShip(row, col, orientation, length);
+	                	 user.getBoard().addShip(new Ship(PointDecoder.encode(row, col), orientation, length));
 	                	 user.getBoard().printBoard();
 	                 }
 	                 else {

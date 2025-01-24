@@ -9,8 +9,8 @@ public class Ship {
 	// checks if each point is floating
 	private ArrayList<Boolean> floatingPoints = new ArrayList<Boolean>();
 	
-	public Ship(int row, int col, char o, int l) {
-		setShip(row, col, o, l);
+	public Ship(int location, char o, int l) {
+		setShip(location, o, l);
 	}
 	
 	public ArrayList<Integer> getShipCoords(){
@@ -25,26 +25,32 @@ public class Ship {
 		floatingPoints.set(coordinates.indexOf(Integer.valueOf(position)), b);
 	}
 	
+	public boolean getIsFloating(int position) {
+		return floatingPoints.get(coordinates.indexOf(Integer.valueOf(position)));
+	}
+	
+	
 	
 	// sets the ship after confirming that it can be placed
-	public void setShip(int row, int col, char orientation, int length){
+	public void setShip(int location, char orientation, int length){
 		// Sets the starting point for the boat)
-		int flatCoords = PointDecoder.encode(row, col);
-		coordinates.add(flatCoords);
+		coordinates.add(location);
 		floatingPoints.add(true);
 		if (orientation == 'v') {
 			// for vertical 
 			for (int i = 1; i < length; i++) {
-				coordinates.add(flatCoords-10*i);
+				coordinates.add(location-10*i);
 				floatingPoints.add(true);
 			}
 		} else {
+			// for horizontal
 			for (int i = 1 ; i < length ; i++) {
-				coordinates.add(flatCoords+i);
+				coordinates.add(location+i);
 				floatingPoints.add(true);
 			}
 		}
 	}
+	
 	
 	public void printCoords() {
 		for (int i : getShipCoords()) {

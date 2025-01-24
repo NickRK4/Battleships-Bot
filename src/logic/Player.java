@@ -49,7 +49,15 @@ public class Player {
 		 */
 		
 		// if you strike the ship's pixel
-		if (other.getBoard().getCoordinate(row, col)) {
+		
+		if (other.getBoard().get)
+		
+		
+		
+		
+		
+		
+		if (other.getBoard().getPixelAtCoordinate()) {
 			System.out.println("Strike");			
 			hitPixels.add(Integer.valueOf(PointDecoder.encode(row, col)));
 			other.getBoard().setCoordinate(row, col, false);
@@ -68,10 +76,17 @@ public class Player {
 		}
 	}
 	
+	
+	
+	
+	
 	// runs all the checks manually before placing a ship; 3 checks:
 	// 1) Orientation
 	// 2) Ship is within bounds
 	// 3) Coordinate is within bounds
+	
+	
+	
 	
 	
 	public boolean canPlace(int row, int col, char orientation, int length) {
@@ -84,23 +99,30 @@ public class Player {
 		        return false;
 		    }
 
+		    // Now converts the point into a point
+		    int p = PointDecoder.encode(row, col);
+		    
 		    // Check for overlaps
 		    if (orientation == 'v') {
 		        // Check vertical overlap
-		        for (int i = row; i > row - length; i--) {
-		            if (getBoard().getCoordinate(i, col)) {
+		        for (int i = row; i > row - (length*10); i-=10) {
+		        	/*
+		        	 * We need a method here that automatically checks if a ship exists
+		        	 * At a given coordinate already
+		        	 * I think there is a getShipAtCoord() method for this
+		        	 */		        	
+		            if (getBoard().getShipAtCoordinate(i) != null) {
 		                return false; // Ship would overlap with an existing ship
 		            }
 		        }
 		    } else {
 		        // Check horizontal overlap
-		        for (int i = col; i < col + length; i++) {
-		            if (getBoard().getCoordinate(row, i)) {
+		        for (int i = col; i < col + 10; i++) {
+		            if (getBoard().getShipAtCoordinate(i) != null) {
 		                return false; // Ship would overlap with an existing ship
 		            }
 		        }
 		    }
-
 		    return true; // If no issues, the ship can be placed
 	}
 }
