@@ -192,7 +192,7 @@ public class Robot extends Player {
 	    // Perform the strike
 	    String[] humanCoords = getCoordinates(decodedMove);
 	    System.out.println("Computer plays: " + humanCoords[1] + "" + humanCoords[0]);
-	    super.strike(other, decodedMove[0], decodedMove[1]);
+	    super.strike(other, chosenMove);
 	}	
 	
 	// returns a valid integer from the list

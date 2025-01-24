@@ -35,6 +35,41 @@ public abstract class Grid {
 			return false;
 		}
 		
+
+		public void addShip(Ship s) {
+			getShips().add(s);
+		}
+		
+		public ArrayList<Ship> getShips(){
+			return this.ships;
+		}
 	
+		public void resetBoard() {
+			ships.clear(); // clears all the ships
+		}
+			
+		public boolean hasShips() {
+			int sunkShips = 0;
+			for (Ship s: this.getShips()) {
+				if (s.isSunk()) {
+					sunkShips++;
+				}
+			}
+			return sunkShips < 5;
+		}
+		
+		public boolean isPixelAtCoordinate(int coord) {
+			for (Ship s: this.getShips()) {
+				// if a ship has this coordinate
+				if ((s.getShipCoords().contains(coord))) {
+					// find its index
+					int index = s.getShipCoords().indexOf(coord);
+					// if the index is true in boolean space, then there is a pixel there
+						if (s.getShipFloats().get(index)) return true;
+				}
+			}
+			
+			return false;
+		}
 	
 }

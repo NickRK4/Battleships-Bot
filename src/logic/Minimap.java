@@ -1,41 +1,35 @@
 package logic;
 
+import java.util.ArrayList;
+
 public class Minimap extends Grid{
 	
-	public Minimap(){
-		board = new Boolean[10][];
-		for (int i = 0; i<10; i++) {
-			board[i] = new Boolean[10];
-			for (int j = 0; j < 10; j++) {
-				board[i][j] = null;
-			}
-		}
-	}
+	public ArrayList<Integer> hitPoints = new ArrayList<Integer>();
+	public ArrayList<Integer> missedPoints = new ArrayList<Integer>();
 	
 	public void printBoard(Player other) {
-		int i = 1;
+		int row = 1;
 		System.out.println("   🇦 🇧 🇨 🇩 🇪 🇫 🇬 🇭 🇮 🇯");
-		for (int row = 0; row < 10; row++) {
-			System.out.printf("%2d", i);
-			for (int col = 0; col < 10; col++) {
-				if (board[row][col] == null) {
-					System.out.print("|⬜️");
-				}
-				else if (board[row][col] && other.getBoard().getShipAtCoordinate(row, col).isSunk()) {
-					System.out.print("|🏴‍☠️️");
-				}
-				else if (!board[row][col]){
-					System.out.print("|️❌");
-				}
-				else {
-					System.out.print("|✅");
-				}
+		for (int i = 0; i < 100; i++) {
+			if (i % 10 == 0) {
+				System.out.printf("%2d", row);
+				row++;
 			}
-			i++;
-			System.out.println();
+			if (missedPoints.contains(i)) {
+				System.out.print("🟥|");
+			}
+			else if (hitPoints.contains(i) && other.getBoard().getShipAtCoordinate(i).isSunk()) {
+				System.out.print("🏴‍☠️|");
+			}
+			else if (hitPoints.contains(i)) {
+				System.out.print("🟩|");
+			}
+			else {
+				System.out.print("🌊|");
+			}
+			if ((i+1) % 10 == 0) {
+				System.out.println();
+			}
 		}
 	}
-	
-	
-	
 }

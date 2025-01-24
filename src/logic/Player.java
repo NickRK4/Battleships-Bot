@@ -36,8 +36,8 @@ public class Player {
 	// Set's the opponents pixel to false if it is true (i.e. there is a ship)
 	// Set's the player's mini-map to true
 	
-	public void strike(Player other, int row, int col) throws IllegalArgumentException {
-		unknownPixels.remove(Integer.valueOf(PointDecoder.encode(row, col)));
+	public void strike(Player other, int point) throws IllegalArgumentException {
+		unknownPixels.remove(Integer.valueOf(point));
 		// if you strike the opponent's ship
 		/*
 		 * Should always remove the pixel from the unknown pixels, since the pixel 'becomes known'
@@ -49,29 +49,19 @@ public class Player {
 		 */
 		
 		// if you strike the ship's pixel
-		
-		if (other.getBoard().get)
-		
-		
-		
-		
-		
-		
-		if (other.getBoard().getPixelAtCoordinate()) {
+		if (other.getBoard().isPixelAtCoordinate(point)) {
 			System.out.println("Strike");			
-			hitPixels.add(Integer.valueOf(PointDecoder.encode(row, col)));
-			other.getBoard().setCoordinate(row, col, false);
-			
-			// long line of code to 'change' the ship's truth value at an index 
-			other.getBoard().getShipAtCoordinate(row, col).setIsFloating(PointDecoder.encode(row, col), false);
-			minimap.setCoordinate(row, col, true);
+			hitPixels.add(point);
+			getMinimap().hitPoints.add(point);
+			// long line of code to 'change' the ship's truth value at an index
+			other.getBoard().getShipAtCoordinate(point).setIsFloating(point, false);
 			return;
 		}
 		else {
 			// otherwise, print "miss", add this point to the missed pixels, and adjust minimap
 			System.out.println("Miss...Lame");
-			missedPixels.add(Integer.valueOf(PointDecoder.encode(row, col)));
-			minimap.setCoordinate(row, col, false);
+			getMinimap().missedPoints.add(point);
+			missedPixels.add(point);
 			return;
 		}
 	}
@@ -84,10 +74,6 @@ public class Player {
 	// 1) Orientation
 	// 2) Ship is within bounds
 	// 3) Coordinate is within bounds
-	
-	
-	
-	
 	
 	public boolean canPlace(int row, int col, char orientation, int length) {
 		if (row < 0 || col < 0 || row > 9 || col > 9) return false;

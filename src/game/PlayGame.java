@@ -100,14 +100,14 @@ public class PlayGame {
 						int[] coords = getCoordinates();
 						int row = coords[0];
 						int col = coords[1];
-						
-						if (userMoves.contains(PointDecoder.encode(row, col))) {
+						int point = PointDecoder.encode(row, col);
+						if (userMoves.contains(point)) {
 							System.out.println("You have already moved there!");
 							continue;
 						}
 						else {
-							userMoves.add(PointDecoder.encode(row, col));
-							user.strike(opponent, row, col);
+							userMoves.add(point);
+							user.strike(opponent, point);
 							validMove = true;
 						}
 					} catch (Exception e) {
