@@ -1,5 +1,5 @@
 ## Motivation
-I created this to practice OOP and 2D arrays, which is funny because the project barely contains 2D arrays now.
+I created this to practice OOP and 2D arrays, although the code now uses 1D points
 
 ## Rules
 The user starts with a choice: either create and place their own ships, or use the robot class' createBoard() method.
