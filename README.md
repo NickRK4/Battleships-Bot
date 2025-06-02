@@ -1,6 +1,3 @@
-## Motivation
-I created this to practice OOP and 2D arrays, although the code now uses 1D points
-
 ## Rules
 The user starts with a choice: either create and place their own ships, or use the robot class' createBoard() method.
 After creating the board, the user starts by guessing the opponent's ship pixels.
