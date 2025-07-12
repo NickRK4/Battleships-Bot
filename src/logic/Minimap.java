@@ -9,7 +9,7 @@ public class Minimap extends Grid{
 	
 	public void printBoard(Player other) {
 		int row = 1;
-		System.out.println("   🇦 🇧 🇨 🇩 🇪 🇫 🇬 🇭 🇮 🇯");
+		System.out.println("   🇦| 🇧| 🇨| 🇩| 🇪| 🇫| 🇬| 🇭| 🇮| 🇯|");
 		for (int i = 0; i < 100; i++) {
 			if (i % 10 == 0) {
 				System.out.printf("%2d", row);
@@ -19,7 +19,7 @@ public class Minimap extends Grid{
 				System.out.print("🟥|");
 			}
 			else if (hitPoints.contains(i) && other.getBoard().getShipAtCoordinate(i).isSunk()) {
-				System.out.print("🏴‍☠️|");
+				System.out.print("🏴|");
 			}
 			else if (hitPoints.contains(i)) {
 				System.out.print("🟩|");
