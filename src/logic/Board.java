@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Board extends Grid {	
 	public void printBoard() {
-		System.out.println("   🇦 🇧 🇨 🇩 🇪 🇫 🇬 🇭 🇮 🇯");
+		System.out.println("   🇦| 🇧| 🇨| 🇩| 🇪| 🇫| 🇬| 🇭| 🇮| 🇯|");
 		int row = 1;
 		for (int i = 0; i < 100; i++) {
 			if (i % 10 == 0) {
